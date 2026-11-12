@@ -35,17 +35,7 @@ build/%.o: src/%.S Makefile
 -include $(OBJECTS:.o=.d)
 include boot/firmware.mk
 
-.PHONY: format diagnostics console
-diagnostics:
-	id
-	lsusb
-	lsblk -o NAME,SIZE,MODEL,TRAN,TYPE,MOUNTPOINTS
-	@printf '\nSerial devices:\n'
-	@for device in /dev/serial/by-id/* /dev/ttyUSB* /dev/ttyACM*; do \
-		[[ ! -e "$$device" ]] || ls -l "$$device"; \
-	done
-	@sunxi-fel --list || { printf 'No accessible FEL device (absent or USB permissions denied).\n'; }
-
+.PHONY: format console
 console:
 	mkdir -p build
 	picocom --baud 115200 --flow n --parity n --databits 8 --send-cmd "sz --xmodem" --logfile build/uart.log "$(SERIAL)"
