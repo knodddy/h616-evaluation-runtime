@@ -7,15 +7,21 @@ SPL := $(FIRMWARE)/u-boot/spl/sunxi-spl.bin
 DTS_DIR := $(FIRMWARE)/u-boot/dts/upstream
 
 $(FIRMWARE)/u-boot/.source: boot/firmware.mk
-	git init $(FIRMWARE)/u-boot
-	git -C $(FIRMWARE)/u-boot fetch --depth 1 https://github.com/u-boot/u-boot.git $(UBOOT_REV)
-	git -C $(FIRMWARE)/u-boot checkout --detach $(UBOOT_REV)
+	if [[ -d $(@D)/.git ]]; then \
+		git -C $(@D) fetch --depth 1 https://github.com/u-boot/u-boot.git $(UBOOT_REV); \
+		git -C $(@D) checkout --detach $(UBOOT_REV); \
+	else \
+		git clone --depth 1 --revision=$(UBOOT_REV) https://github.com/u-boot/u-boot.git $(@D); \
+	fi
 	touch $@
 
 $(FIRMWARE)/tf-a/.source: boot/firmware.mk
-	git init $(FIRMWARE)/tf-a
-	git -C $(FIRMWARE)/tf-a fetch --depth 1 https://github.com/ARM-software/arm-trusted-firmware.git $(TFA_REV)
-	git -C $(FIRMWARE)/tf-a checkout --detach $(TFA_REV)
+	if [[ -d $(@D)/.git ]]; then \
+		git -C $(@D) fetch --depth 1 https://github.com/ARM-software/arm-trusted-firmware.git $(TFA_REV); \
+		git -C $(@D) checkout --detach $(TFA_REV); \
+	else \
+		git clone --depth 1 --revision=$(TFA_REV) https://github.com/ARM-software/arm-trusted-firmware.git $(@D); \
+	fi
 	touch $@
 
 $(BL31): $(FIRMWARE)/tf-a/.source
