@@ -1,0 +1,52 @@
+/dts-v1/;
+
+#include "sun50i-h616.dtsi"
+
+/ {
+	model = "H616 evaluation board";
+	compatible = "allwinner,sun50i-h616";
+
+	aliases {
+		serial0 = &uart0;
+		mmc0 = &mmc0;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	reg_vcc3v3: vcc3v3 {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc3v3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+	};
+};
+
+&uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_ph_pins>;
+	status = "okay";
+};
+
+&mmc0 {
+	vmmc-supply = <&reg_vcc3v3>;
+	bus-width = <4>;
+	broken-cd;
+	status = "okay";
+};
+
+&pio {
+	vcc-pf-supply = <&reg_vcc3v3>;
+	vcc-ph-supply = <&reg_vcc3v3>;
+};
+
+&r_i2c {
+	status = "okay";
+
+	pmic@36 {
+		compatible = "x-powers,axp313a";
+		reg = <0x36>;
+	};
+};

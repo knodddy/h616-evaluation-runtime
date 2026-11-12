@@ -1,0 +1,7 @@
+# Local Nix/direnv state and build result links.
+/.direnv/
+/result
+/result-*
+
+# Keep generated firmware and images in this directory.
+/build/
