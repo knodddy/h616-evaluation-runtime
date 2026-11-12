@@ -1,20 +1,28 @@
 #include "runtime.h"
 
-#include <stdint.h>
+#include "platform.h"
+#include "provision.h"
+#include "uart.h"
+#include "workload.h"
 
 _Noreturn void runtime_main(void) {
-    volatile uint32_t *const uart_tx = (volatile uint32_t *)0x05000000;
-    volatile const uint32_t *const uart_status = (volatile const uint32_t *)0x05000014;
-    const char *message = "runtime started\r\n";
+    bool ready = platform_init();
+    uart_init();
+    if (!ready) {
+        uart_puts("ERR PLATFORM\r\n");
+        uart_drain();
+        platform_halt();
+    }
 
-    // Inherit UART0's clock, pinmux, and 115200-baud configuration from firmware.
-    while (*message) {
-        while (!(*uart_status & (1u << 5))) {
-        }
-        *uart_tx = (uint32_t)*message++;
-    }
-    // Drain the transmitter before entering the workload.
-    while (!(*uart_status & (1u << 6))) {
-    }
-    workload_idle();
+    uart_puts("READY\r\n");
+    const struct workload *workload = provision_wait();
+    workload_prepare(workload);
+    uart_puts("ACK ");
+    uart_puts(workload->name);
+    uart_puts("\r\n");
+    uart_drain();
+    platform_disconnect_grace();
+    uart_disable();
+    platform_quiet();
+    workload_start(workload);
 }

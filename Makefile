@@ -16,7 +16,8 @@ CFLAGS := -std=c11 -mcpu=cortex-a53 -O2 -g -ffreestanding -mgeneral-regs-only \
 ASFLAGS := -mcpu=cortex-a53 -g -Wa,--fatal-warnings
 LDFLAGS := -nostdlib -static -Wl,--build-id=none,--fatal-warnings -Tboot/h616.ld
 
-OBJECTS := build/startup.o build/main.o build/workloads.o
+OBJECTS := build/startup.o build/main.o build/platform.o build/provision.o \
+	build/uart.o build/workload.o build/workloads.o
 
 build/h616-runtime.bin: build/h616-runtime.elf
 	$(OBJCOPY) -O binary $< $@
