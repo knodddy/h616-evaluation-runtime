@@ -48,7 +48,7 @@ diagnostics:
 
 console:
 	mkdir -p build
-	picocom --baud 115200 --flow n --parity n --databits 8 --logfile build/uart.log "$(SERIAL)"
+	picocom --baud 115200 --flow n --parity n --databits 8 --send-cmd "sz --xmodem" --logfile build/uart.log "$(SERIAL)"
 
 format:
 	git ls-files -z --cached --others --exclude-standard -- '*.c' '*.h' | xargs -0 -r clang-format --style=file -i

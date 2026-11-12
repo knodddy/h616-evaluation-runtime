@@ -1,6 +1,8 @@
+# MMIO intentionally dereferences fixed peripheral addresses.
 Checks: >-
   -*,
   clang-analyzer-*,
+  -clang-analyzer-core.FixedAddressDereference,
   bugprone-assignment-in-if-condition,
   bugprone-branch-clone,
   bugprone-integer-division,

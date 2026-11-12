@@ -13,7 +13,7 @@ _start:
     and x0, x0, #0xff
     cbnz x0, .Lpark
 
-    // Require the direct TF-A handoff, before any MMU/cache setup by a loader.
+    // The loader must disable the MMU and both caches before entry.
     mrs x0, sctlr_el2
     tbnz x0, #0, .Lpark
     tbnz x0, #2, .Lpark
