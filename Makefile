@@ -38,7 +38,10 @@ build/%.o: src/%.S Makefile
 -include $(OBJECTS:.o=.d)
 include boot/firmware.mk
 
-.PHONY: format console provision
+.PHONY: format console provision clean
+clean:
+	rm -rf -- build
+
 provision:
 	python3 host/provision.py "$$WORKLOAD" --port "$$SERIAL"
 
