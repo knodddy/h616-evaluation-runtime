@@ -41,26 +41,26 @@ static const struct workload workloads[] = {
 _Alignas(64) static uint32_t measurement_loop[WORKLOAD_WORDS];
 
 const struct workload *workload_find(const char *name) {
-    for (size_t i = 0; i < sizeof(workloads) / sizeof(workloads[0]); ++i) {
-        const char *left = name;
-        const char *right = workloads[i].name;
-        while (*left && *left == *right) {
-            ++left;
-            ++right;
-        }
-        if (*left == *right) {
-            return &workloads[i];
-        }
+  for (size_t i = 0; i < sizeof(workloads) / sizeof(workloads[0]); ++i) {
+    const char *left = name;
+    const char *right = workloads[i].name;
+    while (*left && *left == *right) {
+      ++left;
+      ++right;
     }
-    return NULL;
+    if (*left == *right) {
+      return &workloads[i];
+    }
+  }
+  return NULL;
 }
 
 void workload_prepare(const struct workload *workload) {
-    for (size_t word = 0; word < WORKLOAD_WORDS; ++word) {
-        measurement_loop[word] = workload->code[word];
-    }
+  for (size_t word = 0; word < WORKLOAD_WORDS; ++word) {
+    measurement_loop[word] = workload->code[word];
+  }
 }
 
 _Noreturn void workload_start(const struct workload *workload) {
-    workload_run(measurement_loop, workload->nzcv);
+  workload_run(measurement_loop, workload->nzcv);
 }

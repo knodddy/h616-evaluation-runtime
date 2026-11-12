@@ -8,9 +8,9 @@
 #include <stdint.h>
 
 struct workload {
-    const char *name;
-    const uint32_t *code;
-    uint64_t nzcv;
+  const char *name;
+  const uint32_t *code;
+  uint64_t nzcv;
 };
 
 const struct workload *workload_find(const char *name);
