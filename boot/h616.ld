@@ -24,11 +24,19 @@ SECTIONS
     .rodata : ALIGN(16)
     {
         *(.rodata .rodata.*)
+        . = ALIGN(8);
     } > ram :text
 
-    .data : ALIGN(16)
+    .data : ALIGN(8)
     {
         *(.data .data.*)
+        . = ALIGN(8);
+        __payload_size = ABSOLUTE(. - ORIGIN(ram));
+    } > ram :data
+
+    .dtb (NOLOAD) : ALIGN(8)
+    {
+        . += 64K;
     } > ram :data
 
     .bss (NOLOAD) : ALIGN(16)

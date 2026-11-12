@@ -1,0 +1,48 @@
+/dts-v1/;
+
+/ {
+	description = "H616 runtime firmware";
+	#address-cells = <1>;
+
+	images {
+		runtime {
+			description = "H616 runtime";
+			data = /incbin/("../build/h616-runtime.bin");
+			type = "standalone";
+			os = "u-boot";
+			arch = "arm64";
+			compression = "none";
+			load = <0x4a000000>;
+			entry = <0x4a000000>;
+		};
+
+		atf {
+			description = "ARM Trusted Firmware";
+			data = /incbin/("../build/firmware/tf-a/build/sun50i_h616/release/bl31.bin");
+			type = "firmware";
+			os = "arm-trusted-firmware";
+			arch = "arm64";
+			compression = "none";
+			load = <0x40000000>;
+			entry = <0x40000000>;
+		};
+
+		fdt {
+			description = "allwinner/sun50i-h616-eval";
+			data = /incbin/("../build/h616.dtb");
+			type = "flat_dt";
+			arch = "arm64";
+			compression = "none";
+		};
+	};
+
+	configurations {
+		default = "config-1";
+		config-1 {
+			description = "allwinner/sun50i-h616-eval";
+			firmware = "atf";
+			loadables = "runtime";
+			fdt = "fdt";
+		};
+	};
+};

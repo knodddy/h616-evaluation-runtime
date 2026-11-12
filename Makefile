@@ -1,7 +1,7 @@
 SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
 
-.DEFAULT_GOAL := build/h616-runtime.bin
+.DEFAULT_GOAL := build/h616-sd.img
 .DELETE_ON_ERROR:
 
 CROSS_COMPILE ?= aarch64-none-elf-

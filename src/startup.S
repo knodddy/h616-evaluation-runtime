@@ -3,6 +3,11 @@
 .global _start
 .type _start, %function
 _start:
+    b .Lentry
+    .balign 8
+    .quad _start
+    .quad __payload_size
+.Lentry:
     msr daifset, #0xf
     mrs x0, CurrentEL
     cmp x0, #0x8
