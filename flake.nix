@@ -46,11 +46,11 @@
 
               dtc
               ubootTools
-              # Required by upstream U-Boot's image builder.
               (python3.withPackages (ps: [
                 ps.setuptools
                 ps.pyelftools
                 ps.libfdt
+                ps.pyserial
               ]))
 
               genimage

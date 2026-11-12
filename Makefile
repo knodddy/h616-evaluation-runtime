@@ -8,6 +8,8 @@ CROSS_COMPILE ?= aarch64-none-elf-
 CC := $(CROSS_COMPILE)gcc
 OBJCOPY := $(CROSS_COMPILE)objcopy
 SERIAL ?= /dev/ttyUSB0
+WORKLOAD ?=
+export SERIAL WORKLOAD
 
 CPPFLAGS := -Iinclude
 CFLAGS := -std=c11 -mcpu=cortex-a53 -O2 -g -ffreestanding -mgeneral-regs-only \
@@ -36,7 +38,10 @@ build/%.o: src/%.S Makefile
 -include $(OBJECTS:.o=.d)
 include boot/firmware.mk
 
-.PHONY: format console
+.PHONY: format console provision
+provision:
+	python3 host/provision.py "$$WORKLOAD" --port "$$SERIAL"
+
 console:
 	mkdir -p build
 	picocom --baud 115200 --flow n --parity n --databits 8 --send-cmd "sz --xmodem" --logfile build/uart.log "$(SERIAL)"
