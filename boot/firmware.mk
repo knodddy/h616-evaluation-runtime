@@ -30,9 +30,9 @@ $(FIRMWARE)/u-boot/.config: $(FIRMWARE)/u-boot/.source boot/h616-eval_defconfig 
 $(FIRMWARE)/u-boot/u-boot-sunxi-with-spl.bin: $(FIRMWARE)/u-boot/.config $(BL31)
 	$(MAKE) -C $(FIRMWARE)/u-boot CROSS_COMPILE=$(CROSS_COMPILE) BL31=$(BL31)
 
-# Unpartitioned console-only image; H616 Boot ROM also checks sector 256.
+# H616's alternate boot location is 256 KiB (sector 512), unlike older sunxi SoCs.
 build/u-boot-sd.img: $(FIRMWARE)/u-boot/u-boot-sunxi-with-spl.bin
-	test $$(stat -c %s $<) -le $$((4 * 1024 * 1024 - 128 * 1024))
+	test $$(stat -c %s $<) -le $$((4 * 1024 * 1024 - 256 * 1024))
 	rm -f $@
 	truncate -s 4M $@
-	dd if=$< of=$@ bs=1K seek=128 conv=notrunc status=none
+	dd if=$< of=$@ bs=1K seek=256 conv=notrunc status=none
