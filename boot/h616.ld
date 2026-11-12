@@ -3,7 +3,7 @@ ENTRY(_start)
 
 MEMORY
 {
-    /* TF-A's default PRELOADED_BL33_BASE; 1 MiB is our payload budget. */
+    /* TF-A's default PRELOADED_BL33_BASE. */
     ram (rwx) : ORIGIN = 0x4a000000, LENGTH = 1M
 }
 

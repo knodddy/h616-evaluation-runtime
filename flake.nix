@@ -27,12 +27,10 @@
             hardeningDisable = [ "all" ];
 
             packages = with pkgs; [
-              # Target tools run on the host; mkShell retains its native compiler.
               cross.stdenv.cc
               cross.buildPackages.binutils
               cross.buildPackages.gdb
 
-              # Host build tools for the payload, TF-A, and U-Boot.
               git
               gnumake
               pkg-config
@@ -43,11 +41,9 @@
               which
               perl
 
-              # Source formatting, static analysis, and editor support.
               clang-tools
               nixfmt
 
-              # Device trees and firmware image packaging.
               dtc
               ubootTools
               # Required by upstream U-Boot's image builder.
@@ -57,7 +53,6 @@
                 ps.libfdt
               ]))
 
-              # TF image preparation and inspection.
               genimage
               dosfstools
               mtools
@@ -65,7 +60,6 @@
               coreutils
               file
 
-              # UART console/transfers and optional USB FEL boot.
               picocom
               lrzsz
               sunxi-tools

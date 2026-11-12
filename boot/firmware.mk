@@ -1,4 +1,4 @@
-# U-Boot v2026.10 and TF-A v2.14.0, fetched only for the firmware target.
+# U-Boot v2026.10 and TF-A v2.14.0.
 UBOOT_REV := 5508406582f6f7120dce0c4b3059819a41788db2
 TFA_REV := 1d5aa939bc8d3d892e2ed9945fa50e36a1a924cc
 FIRMWARE := $(abspath build/firmware)
