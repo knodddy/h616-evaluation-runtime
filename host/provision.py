@@ -32,7 +32,7 @@ def read_line(uart, deadline):
     while len(line) < 128:
         remaining = deadline - time.monotonic()
         if remaining <= 0:
-            raise TimeoutError("no matching ACK; check UART and reset the board before retrying")
+            raise TimeoutError("UART response timed out; check UART and reset the board before retrying")
         uart.timeout = remaining
         value = uart.read(1)
         if value == b"\n":
@@ -48,15 +48,29 @@ def provision(port, workload, timeout):
     expected = f"ACK {workload}".encode("ascii")
     command = f"RUN {workload}\n".encode("ascii")
     with open_uart(port, timeout) as uart:
-        if uart.write(command) != len(command):
-            raise OSError("incomplete command write; reset the board before retrying")
-        deadline = time.monotonic() + timeout
-        while True:
-            response = read_line(uart, deadline)
-            if response == expected:
-                return workload
-            if response.startswith(b"ACK ") or response.startswith(b"ERR "):
-                raise ValueError(f"unexpected response: {response!r}")
+        for request, reply in ((b"\x18", b"SYNC"), (command, expected)):
+            if uart.write(request) != len(request):
+                raise OSError("incomplete command write; reset the board before retrying")
+            deadline = time.monotonic() + timeout
+            while True:
+                read_deadline = min(deadline, time.monotonic() + 0.25) if reply == b"SYNC" else deadline
+                try:
+                    response = read_line(uart, read_deadline)
+                except TimeoutError as error:
+                    if reply != b"SYNC" or time.monotonic() >= deadline:
+                        raise TimeoutError(
+                            f"timed out waiting for {reply.decode()}; check UART and reset the board before retrying"
+                        ) from error
+                    if uart.write(request) != len(request):
+                        raise OSError("incomplete command write; reset the board before retrying")
+                    continue
+                if response == reply:
+                    break
+                if reply == b"SYNC" and response == b"ERR COMMAND":
+                    continue
+                if response.startswith(b"ACK ") or response.startswith(b"ERR "):
+                    raise ValueError(f"unexpected response: {response!r}")
+    return workload
 
 
 def positive_timeout(value):

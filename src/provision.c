@@ -11,6 +11,12 @@ static bool read_command(char *command, size_t capacity) {
     bool invalid = false;
     for (;;) {
         int value = uart_getc();
+        if (value == 0x18) {
+            length = 0;
+            invalid = false;
+            uart_puts("SYNC\r\n");
+            continue;
+        }
         if (value == '\r' || value == '\n') {
             command[length] = '\0';
             return !invalid;
