@@ -1,0 +1,23 @@
+[
+  {
+    "tool": "audit_svg_schematic.py",
+    "exit_code": 0
+  },
+  {
+    "tool": "audit_pdf_text.py",
+    "exit_code": 0
+  },
+  {
+    "tool": "audit_figure_collisions.py",
+    "exit_code": 0,
+    "geometry": "Original PDF glyph bounds expanded to prevent the known multiline trace aggregation false positives."
+  },
+  {
+    "tool": "requested-content-check",
+    "exit_code": 0,
+    "execution_blocks": 7,
+    "width_pt": 150,
+    "code_only_in_terminal_blocks": true,
+    "branches_from_preparation": true
+  }
+]

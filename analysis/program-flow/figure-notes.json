@@ -1,0 +1,30 @@
+{
+  "scope": "Combined normal microSD boot and simplified runtime execution on the primary core.",
+  "boot_chain": [
+    "Boot ROM",
+    "U-Boot SPL",
+    "TF-A (BL31)",
+    "runtime test selection"
+  ],
+  "runtime_order": [
+    "select",
+    "prepare",
+    "instruction-loop or idle-loop"
+  ],
+  "snippets": "Only the final instruction and idle loops contain code. Each example contains 256 workload instructions followed by a branch, matching the source macros.",
+  "omitted_paths": "UART initialization, handshaking, acknowledgement and disconnect delay are abstracted into test selection/preparation. Startup checks, platform checks, errors and exception halts are omitted.",
+  "loop_semantics": "A single destination is selected before execution. WFE can wait for an event. No automatic workload sequence or return to provisioning.",
+  "timing": "Disconnect grace is 240000000 counter ticks at a checked 24 MHz: 10 seconds.",
+  "source_files": [
+    "boot/h616.its",
+    "src/startup.S",
+    "src/main.c",
+    "src/provision.c",
+    "src/platform.c",
+    "src/workload.c",
+    "src/workloads.S",
+    "include/workload.h"
+  ],
+  "fonts": "Helvetica/Arial sans-serif labels; Courier New code. SVG text is editable.",
+  "style": "Horizontal green/blue/orange boot stages; purple runtime descends under TF-A with staggered terminal states. All execution blocks are 150 pt wide. Preparation uses short bullets; extended branch arrows carry purple selection conditions. No overall title, caption or subtitles."
+}
