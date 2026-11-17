@@ -3,4 +3,5 @@
 /result-*
 
 /build/
+/u-boot.cfg.tmp
 __pycache__/
