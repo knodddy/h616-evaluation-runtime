@@ -1,0 +1,9 @@
+{
+  "raw_hashes_verified": 72,
+  "included_traces": 66,
+  "excluded_unnamed_traces": 6,
+  "unique_frequencies_per_labelled_trace": 801,
+  "summarized_parameter_pairs": 336,
+  "plotted_ranges_contain_means": true,
+  "inputs_modified": false
+}

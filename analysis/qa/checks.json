@@ -1,0 +1,42 @@
+[
+  {
+    "file": "01_ps_spectra.pdf",
+    "tool": "audit_pdf_text.py",
+    "exit_code": 0
+  },
+  {
+    "file": "01_ps_spectra.pdf",
+    "tool": "audit_figure_collisions.py",
+    "exit_code": 0
+  },
+  {
+    "file": "02_separation.pdf",
+    "tool": "audit_pdf_text.py",
+    "exit_code": 0
+  },
+  {
+    "file": "02_separation.pdf",
+    "tool": "audit_figure_collisions.py",
+    "exit_code": 0
+  },
+  {
+    "file": "03_usb_comparison.pdf",
+    "tool": "audit_pdf_text.py",
+    "exit_code": 0
+  },
+  {
+    "file": "03_usb_comparison.pdf",
+    "tool": "audit_figure_collisions.py",
+    "exit_code": 0
+  },
+  {
+    "file": "04_repeat_variation.pdf",
+    "tool": "audit_pdf_text.py",
+    "exit_code": 0
+  },
+  {
+    "file": "04_repeat_variation.pdf",
+    "tool": "audit_figure_collisions.py",
+    "exit_code": 0
+  }
+]

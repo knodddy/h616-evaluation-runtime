@@ -1,0 +1,84 @@
+{
+  "figure_archetype": "Quantitative grids; exploratory descriptive analysis",
+  "backend": "Python/Matplotlib",
+  "all_panels_visually_reviewed": true,
+  "alignment": "All four figures pass the 1.5 pt alignment gate.",
+  "pdf_glyphs": "All four PDFs pass the 5 pt minimum.",
+  "pdf_collisions": "All four final PDFs pass with exit code 0.",
+  "source_warnings_reviewed": {
+    "EXPORT-RASTER": "PNG previews and editable PDF/SVG plots satisfy this task; TIFF was not requested.",
+    "RASTER-DPI": "300 dpi previews are adequate for screen review; vector exports are supplied for scaling.",
+    "ROTATION-ANCHOR": "Vertical heatmap tick labels were visually checked; final PDF collision checks pass."
+  },
+  "panels": [
+    {
+      "figure": "01",
+      "panel": "a",
+      "claim": "Full-band PS/no-USB workload comparison",
+      "summary": "Mean dB and min\u2013max of 3 consecutive sweeps"
+    },
+    {
+      "figure": "01",
+      "panel": "b",
+      "claim": "Exploratory 130\u2013165 MHz notch location and depth",
+      "summary": "Same sweeps; display zoom only"
+    },
+    {
+      "figure": "02",
+      "panel": "a",
+      "claim": "PS/no-USB complex separation relative to within-run variation",
+      "summary": "Descriptive RMS separation / pooled repeat SD"
+    },
+    {
+      "figure": "02",
+      "panel": "b",
+      "claim": "PS/USB separation under the same metric",
+      "summary": "Descriptive RMS separation / pooled repeat SD"
+    },
+    {
+      "figure": "02",
+      "panel": "c",
+      "claim": "CPU separation and missing repeat estimates",
+      "summary": "Same metric; dashes where either group has only one sweep"
+    },
+    {
+      "figure": "03",
+      "panel": "a",
+      "claim": "NOP response varies with USB condition",
+      "summary": "Mean dB and observed min\u2013max, n=3 per condition"
+    },
+    {
+      "figure": "03",
+      "panel": "b",
+      "claim": "MOV varies less than NOP or OR",
+      "summary": "Mean dB and observed min\u2013max, n=3 per condition"
+    },
+    {
+      "figure": "03",
+      "panel": "c",
+      "claim": "ADD provides an intermediate USB comparison",
+      "summary": "Mean dB and observed min\u2013max, n=3 per condition"
+    },
+    {
+      "figure": "03",
+      "panel": "d",
+      "claim": "OR shows a large low-frequency difference",
+      "summary": "Mean dB and observed min\u2013max, n=3 per condition"
+    },
+    {
+      "figure": "04",
+      "panel": "a",
+      "claim": "B/PS/USB reflection-notch variability",
+      "summary": "Three individual sweeps, no smoothing"
+    },
+    {
+      "figure": "04",
+      "panel": "b",
+      "claim": "IDLE/CPU reflection-notch variability",
+      "summary": "Three individual sweeps, no smoothing"
+    }
+  ],
+  "exclusions": "6 unnamed traces excluded by agreement; all 66 labelled traces retained. Nine proprietary CST files not decoded.",
+  "visual_transformations": "Zooms are explicitly labelled. Duplicate 100 MHz segment endpoints averaged in complex form. No smoothing, interpolation, or outlier removal.",
+  "statistical_limits": "No hypothesis tests, confidence intervals, independent-run accuracy estimates, or absolute impedance conversion."
+}

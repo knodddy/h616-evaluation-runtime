@@ -1,0 +1,31 @@
+{
+  "python": "3.14.10 (main, Oct 25 2026, 17:12:00) [GCC 16.2.0]",
+  "numpy": "2.5.4",
+  "pandas": "3.0.4",
+  "input_s2p_count": 72,
+  "labelled_s2p_count": 66,
+  "unnamed_files": [
+    "no-power/none/PS/1.s2p",
+    "no-power/none/PS/2.s2p",
+    "no-power/none/PS/3.s2p",
+    "power-on/none/PS/1.s2p",
+    "power-on/none/PS/2.s2p",
+    "power-on/none/PS/3.s2p"
+  ],
+  "unparsed_instrument_state_files": [
+    "no-power/none/PS/3.cst",
+    "no-power/none/PS/PS.cst",
+    "no-power/none/dram/DC.cst",
+    "no-power/sd/PS/PS.cst",
+    "no-power/sd/dram/DC.cst",
+    "no-power/usb/PS/PS.cst",
+    "no-power/usb/dram/DC.cst",
+    "power-on/none/PS/1.cst",
+    "power-on/usb/PS/B1.cst"
+  ],
+  "duplicate_frequency_rule": "Complex arithmetic mean of the two 100 MHz segment endpoints, within each trace.",
+  "frequency_summary_rule": "Trapezoidal integral divided by total bandwidth; squared quantities integrated before taking square root.",
+  "magnitude_plot_rule": "20 log10(abs(S)) per sweep, then arithmetic mean and observed min/max across sweeps.",
+  "repeat_type": "Consecutive technical sweeps of one run; not independent reset/provision cycles.",
+  "impedance_conversion": "Not performed: probe topology and calibration reference plane unverified."
+}

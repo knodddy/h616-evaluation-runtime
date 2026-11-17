@@ -1,0 +1,10 @@
+Nature Figure Rendered Collision Audit
+pdf: analysis/02_separation.pdf
+pages: 1
+visible text boxes: 146
+stroke paths: 26
+
+
+summary: 0 fail, 0 warn, 84 contained fill overlays, 84 contained image overlays
+verdict: PASS
+note: contained overlays can be intentional; WARN findings need final-size visual review
