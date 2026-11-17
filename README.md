@@ -1,33 +1,41 @@
 # H616 evaluation runtime
 
-Bare-metal C and assembly runtime for H616 workload experiments
+Bare-metal C and assembly runtime for H616 workload experiments. Boots from microSD
+through U-Boot SPL and TF-A directly into the runtime.
 
 ```sh
 nix develop
-make         # Build ELF and binary in build/
-make format  # Format C, headers, and Nix
-make -j4 build/u-boot-sd.img  # Fetch and build SPL, TF-A, and U-Boot
+make
+make flash DEVICE=/dev/sdX
 ```
 
-For board access, run `make diagnostics` to list USB, serial, and FEL devices.
-Use `make console SERIAL=/dev/ttyUSB0` for a 115200-baud UART console; output is
-logged to `build/uart.log`. Exit with Ctrl-A, Ctrl-X.
+`make` builds `build/h616-sd.img`. Flash the whole microSD device, not a partition;
+this overwrites its boot and partition data.
 
-The U-Boot image stops at the UART prompt. Connect H4 pin 1 to adapter GND,
-pin 2 to RX, and pin 3 to TX using 3.3 V logic; leave adapter VCC disconnected.
+With the flashed microSD inserted and the board powered off, use a 3.3 V UART
+adapter and leave its VCC disconnected:
 
-To launch the runtime, build with `make` and open `make console` using the updated
-U-Boot image. At its prompt, run `loadx 0x4a000000`, then press Ctrl-A, Ctrl-S and
-enter `build/h616-runtime.bin`. After the transfer completes, run:
+1. Connect adapter RX to H4 pin 2 and GND to H4 pin 1, then plug the adapter into
+   the host's USB port. Leave TX disconnected.
+2. Connect power to the board.
+3. Wait a few seconds, then connect adapter TX to H4 pin 3.
+4. Provision the selected workload:
 
-```text
-dcache off
-icache off
-go 0x4a000000
-```
+   ```sh
+   make provision WORKLOAD=ADD SERIAL=/dev/ttyUSB0
+   ```
 
-The runtime prints `runtime started` and idles. Power-cycle to return to U-Boot.
+5. After `ACK ADD`, disconnect all UART leads from the board within 10 seconds.
 
-SD boot and the UART console are verified; DDR stability under workload is untested.
-It contains no partition table or filesystem. Writing it to a card replaces that
-card's existing boot and partition data.
+The selected workload starts after the disconnect delay and runs until reset.
+Use `WORKLOAD=IDLE` for the wait-for-event loop. Power-cycle the board to select
+another workload, following the same connection sequence.
+
+`make console SERIAL=/dev/ttyUSB0` optionally captures boot output at 115200 baud
+in `build/uart.log`. Exit with Ctrl-A, Ctrl-X before provisioning.
+
+`make format` formats C, headers and Nix; `make clean` removes build outputs and
+downloaded firmware sources.
+
+See the [execution diagram](analysis/program-flow/execution-flow.svg) and
+[VNA findings](analysis/findings.md).
